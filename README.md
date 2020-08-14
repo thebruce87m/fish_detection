@@ -24,14 +24,14 @@ Build:
 docker build . --tag darknet-train
 ```
 
-Make data folder:
+Make data folder for our images:
 ```
 mkdir ~/darknet-data
 ```
 
 Run:
 ```
-docker run --gpus all -it -v ~/darknet-data:/opt/data darknet-train
+docker run --gpus all -it -v ~/darknet-data:/opt/data -v $(pwd):/opt/scripts darknet-train
 ```
 
 Check the GPU in the container:
@@ -44,19 +44,14 @@ nvidia-smi
 We are going to use the datasets provided by [openimages](https://storage.googleapis.com/openimages/web/index.html) when they already contain annotations of the interesting objects. They offer 600 object classes in 1,743,042 training images, with a full validation (41,620 images) and test (125,436 images) sets.
 
 
-1. Install awscli (universal Command Line Environment for AWS)
-```bash
-$ sudo apt install awscli
-```
-
-2. Download images for train, validation and test:
+1. Download images for train, validation and test:
 ```bash
 $ aws s3 --no-sign-request sync s3://open-images-dataset/train [target_dir/train] (513GB)
 $ aws s3 --no-sign-request sync s3://open-images-dataset/validation [target_dir/validation] (12GB)
 $ aws s3 --no-sign-request sync s3://open-images-dataset/test [target_dir/test] (36GB)
 ```
 
-3. Download the CSV files with all the annotations and classes
+2. Download the CSV files with all the annotations and classes
 ```bash
 $ wget https://storage.googleapis.com/openimages/2018_04/train/train-annotations-bbox.csv
 $ wget https://storage.googleapis.com/openimages/2018_04/validation/validation-annotations-bbox.csv
