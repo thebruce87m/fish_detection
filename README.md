@@ -1,16 +1,43 @@
 ## Introduction
 
-## YOLO - darknet
+## Check Dependencies
 
-Clone the repository:
-```bash
-$ cd /opt/
-$ git clone https://github.com/AlexeyAB/darknet
-$ cd /opt/darknet
-$ make
+NVIDIA driver installed:
+```
+nvidia-smi
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 450.36.06    Driver Version: 450.36.06    CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+...
 ```
 
-Note: Edit the Makefile to enable GPU and Cuda support.
+Docker version with NVIDIA GPU support
+```
+docker --version
+Docker version 19.03.12, build 48a66213fe
+```
+
+## Build the docker
+
+Build:
+```
+docker build . --tag darknet-train
+```
+
+Make data folder:
+```
+mkdir ~/darknet-data
+```
+
+Run:
+```
+docker run --gpus all -it -v ~/darknet-data:/opt/data darknet-train
+```
+
+Check the GPU in the container:
+```
+nvidia-smi
+```
 
 ## Download datasets
 
