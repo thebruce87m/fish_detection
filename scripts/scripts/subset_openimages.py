@@ -50,7 +50,7 @@ with open(classes_file) as f:
 
 fish_class_ids = []
 for class_id in class_dict:
-        if class_dict[class_id] in ['Fish', 'Goldfish']:
+        if class_dict[class_id] in ['Apple']:
                     fish_class_ids += [class_id]
 print(fish_class_ids)
 print([class_dict[class_id] for class_id in fish_class_ids])

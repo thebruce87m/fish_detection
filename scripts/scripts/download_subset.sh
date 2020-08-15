@@ -7,20 +7,13 @@
 
 N=10 # Download batch size
 (
-for file in $(</opt/data/train_images_subset.txt); do 
+for file in $(</opt/data/build/subset-train-files.txt); do 
    ((i=i%N)); ((i++==0)) && wait
-   aws s3 --no-sign-request cp s3://open-images-dataset/train/$file /opt/data/train/ & 
+   if [ ! -f /opt/data/train/$file ]; then
+     aws s3 --no-sign-request cp s3://open-images-dataset/train/$file /opt/data/train/ & 
+   fi
 done
 )
 
-aws s3 --no-sign-request sync s3://open-images-dataset/validation /opt/data/validation/
-aws s3 --no-sign-request sync s3://open-images-dataset/test /opt/data/test/
-
-cd /opt/data/
-
-wget https://storage.googleapis.com/openimages/2018_04/train/train-annotations-bbox.csv
-wget https://storage.googleapis.com/openimages/2018_04/validation/validation-annotations-bbox.csv
-wget https://storage.googleapis.com/openimages/2018_04/test/test-annotations-bbox.csv
-wget https://storage.googleapis.com/openimages/2018_04/class-descriptions-boxable.csv
-
-echo "Done!"
+#aws s3 --no-sign-request sync s3://open-images-dataset/validation /opt/data/validation/
+#aws s3 --no-sign-request sync s3://open-images-dataset/test /opt/data/test/
